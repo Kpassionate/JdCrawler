@@ -1,0 +1,13 @@
+*.pyc
+.DS_Store
+.idea/
+/logs
+/media
+/static
+wsgi.ini
+/push_certs/*prod*
+build/
+dist/
+*.egg-info/
+.env.sample
+

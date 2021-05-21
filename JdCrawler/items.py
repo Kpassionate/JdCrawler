@@ -6,12 +6,11 @@
 import scrapy
 
 
-class JdcrawlerItem(scrapy.Item):
-    # define the fields for your item here like:
-    name = scrapy.Field()
-    title = scrapy.Field()
-    url = scrapy.Field()
-    price = scrapy.Field()
-    shop = scrapy.Field()
-    searchword = scrapy.Field()
-    pass
+class JdItem(scrapy.Item):
+    id = scrapy.Field()  # 商品id
+    name = scrapy.Field()  # 商品名称
+    price = scrapy.Field()  # 商品价格
+    shop = scrapy.Field()  # 店铺名称
+    img = scrapy.Field()  # 图片url
+    url = scrapy.Field()  # 商品详情页链接
+    info = scrapy.Field()  # 详细信息

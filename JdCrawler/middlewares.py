@@ -8,6 +8,42 @@ from scrapy import signals
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
+import time
+from selenium import webdriver
+from scrapy.http import HtmlResponse
+
+
+class SeleniumMiddleware(object):
+    def __init__(self):
+        self.option = webdriver.ChromeOptions()
+        self.driver = webdriver.Chrome('C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver',
+                                       options=self.option)
+        # 滚动下滑
+        self.js_code = """window.scrollTo(0, 10000)"""
+
+    def __del__(self):
+        self.driver.close()
+
+    def process_request(self, spider, request):
+        # 非必要不使用selenium，含有标识的使用。本项目详情页一律不使用
+        if request.meta.get("middleware") == "Selenium":
+            self.option.add_argument("--headless")
+            # 发送请求
+
+            self.driver.implicitly_wait(10)
+            self.driver.get(request.url)
+
+            # 执行js代码
+            self.driver.execute_script(self.js_code)
+            # 等待数据加载
+            time.sleep(2)
+            # 获取当前页资源
+            data = self.driver.page_source
+            data_str = str(data)
+            res = HtmlResponse(body=data_str, encoding="utf-8", request=request, url=request.url)
+
+            return res
+
 
 class JdcrawlerSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
