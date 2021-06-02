@@ -8,7 +8,7 @@ class MongoPipeline(object):
         self.client = MongoClient(host="127.0.0.1", port=27017)
         # 访问数据库
         self.db = self.client["JdGoods"]
-        # 访问集合
+        # 访问集合（表）
         self.col = self.db["books"]
 
     def process_item(self, item, spider):
